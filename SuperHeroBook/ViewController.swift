@@ -13,6 +13,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     var superhero = [String]()
     var heroImagesName = [String]()
+    var chosenName = ""
+    var chosenImage = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -21,15 +24,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         superhero.append("Batman")
         superhero.append("Spiderman")
         superhero.append("Ironman")
-        superhero.append("Hulk")
         superhero.append("Superman")
-        
-        
+        superhero.append("Hulk")
         heroImagesName.append("batman")
-        heroImagesName.append("superman")
         heroImagesName.append("spiderman")
-        heroImagesName.append("hulk")
         heroImagesName.append("ironman")
+        heroImagesName.append("superman")
+        heroImagesName.append("hulk")
+        
         
         // Do any additional setup after loading the view.
     }
@@ -50,7 +52,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        chosenName = superhero[indexPath.row]
+        chosenImage = heroImagesName[indexPath.row]
         performSegue(withIdentifier: "toDetailsViewController", sender: nil)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailsViewController"{
+            let destinationVC = segue.destination as! DetailsViewController
+            destinationVC.chosenHeroName = chosenName
+            destinationVC.chosenHeroImage = chosenImage
+        }
     }
     
     
